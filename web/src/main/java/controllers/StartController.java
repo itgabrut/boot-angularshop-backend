@@ -2,6 +2,7 @@ package controllers;
 
 
 import dao.ItemRepository;
+import model.Client;
 import model.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -62,5 +63,11 @@ public class StartController {
     @CrossOrigin
     public Item getSingle(@RequestParam( name = "id")Integer id){
         return itemrepository.getItem(id);
+    }
+
+    @RequestMapping(value = "/getClient")
+    @CrossOrigin
+    public Client getClient(){
+       return new Client();
     }
 }
