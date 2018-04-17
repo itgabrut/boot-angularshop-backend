@@ -1,0 +1,4 @@
+rootProject.name = 'boot'
+include 'persistence'
+include 'web'
+

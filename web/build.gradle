@@ -1,0 +1,38 @@
+
+buildscript {
+    repositories { mavenCentral() }
+}
+
+plugins { id "io.spring.dependency-management" version "1.0.4.RELEASE" }
+group 'Store-back'
+version '1.0-SNAPSHOT'
+
+ext { springBootVersion = '2.0.0.RELEASE' }
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'war'
+
+
+war {
+    baseName =  'store-back'
+}
+
+
+sourceCompatibility = 1.8
+
+repositories { mavenCentral() }
+
+
+dependencies {
+    compile project(':persistence')
+    compile('org.springframework.boot:spring-boot-starter')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-security')
+    compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.7.0'
+//    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat::1.5.9.RELEASE'
+}
+
+dependencyManagement {
+    imports { mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}") }
+}
