@@ -35,8 +35,8 @@ public class Client {
     @Column(name ="surname")
     private String surname;
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="dd-MM-yyyy",timezone = "Europe/Moscow")
+//    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     @Column(name ="dateOfBirth")
     private Date birth;
 
@@ -51,8 +51,8 @@ public class Client {
     private String passwordconfirm;
 
     @Column(name = "registered")
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="dd-MM-yyyy HH:mm a",timezone = "Europe/Moscow")
+//    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd",timezone = "Europe/Moscow")
     private Date registered;
 
     @Transient

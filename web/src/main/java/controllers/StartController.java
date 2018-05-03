@@ -65,9 +65,4 @@ public class StartController {
         return itemrepository.getItem(id);
     }
 
-    @RequestMapping(value = "/getClient")
-    @CrossOrigin
-    public Client getClient(){
-       return new Client();
-    }
 }
