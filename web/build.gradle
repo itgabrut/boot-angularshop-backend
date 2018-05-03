@@ -1,27 +1,30 @@
 
-buildscript {
-    repositories { mavenCentral() }
-}
 
 plugins { id "io.spring.dependency-management" version "1.0.4.RELEASE" }
 group 'Store-back'
 version '1.0-SNAPSHOT'
 
-ext { springBootVersion = '2.0.0.RELEASE' }
+//ext { springBootVersion = '2.0.0.RELEASE' }
 
 apply plugin: 'java'
-apply plugin: 'idea'
+//apply plugin: 'idea'
 apply plugin: 'war'
+apply plugin: 'org.springframework.boot'
 
 
 war {
     baseName =  'store-back'
 }
 
+repositories{
+    flatDir {
+        dirs '../persistence/build/libs'
+    }
+}
+
 
 sourceCompatibility = 1.8
 
-repositories { mavenCentral() }
 
 
 dependencies {

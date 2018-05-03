@@ -1,0 +1,20 @@
+allprojects {
+    repositories {
+        jcenter()
+
+
+    }
+
+
+
+    buildscript {
+        ext { springBootVersion = '2.0.0.RELEASE' }
+        repositories { mavenCentral() }
+        dependencies { classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") }
+    }
+}
+
+
+
+
+
