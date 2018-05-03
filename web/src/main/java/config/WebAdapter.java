@@ -29,4 +29,9 @@ public class WebAdapter implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
     }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedHeaders("*").allowedOrigins("http://localhost:4200").allowCredentials(true);
+    }
 }

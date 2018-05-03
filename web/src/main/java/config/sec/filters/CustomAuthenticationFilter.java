@@ -14,6 +14,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -55,11 +56,16 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         Claims claims = Jwts.claims();
         claims.put("roles", client.getAuthorities());
         String token = Jwts.builder()
-                .setSubject(client.getUsername())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .setClaims(claims)
+                .setSubject(client.getUsername())
                 .signWith(SignatureAlgorithm.HS512, SECRET.getBytes())
                 .compact();
         response.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+        // it allows cors request js code getting access to this header
+        response.addHeader("access-control-expose-headers", HEADER_STRING);
+        Cookie cookie = new Cookie(HEADER_STRING, token);
+        cookie.setMaxAge(36000);
+        response.addCookie(cookie);
     }
 }
