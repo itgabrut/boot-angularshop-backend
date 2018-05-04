@@ -28,7 +28,7 @@ public class StartController {
 //    @RequestMapping( value = "/red")
 //    public @ResponseBody Object getMe(){
 //        String data = "";
-//        ClassPathResource cpr = new ClassPathResource("static/test.txt");
+//        ClassPathResource cpr = new ClassPathResource("static/sql_for_bucket.txt");
 //        try {
 //            byte[] bdata = FileCopyUtils.copyToByteArray(cpr.getInputStream());
 //            data = new String(bdata);
