@@ -1,8 +1,7 @@
+
 allprojects {
     repositories {
         jcenter()
-
-
     }
 
 
@@ -13,6 +12,8 @@ allprojects {
         dependencies { classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") }
     }
 }
+
+
 
 
 

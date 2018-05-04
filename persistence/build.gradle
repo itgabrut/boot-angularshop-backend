@@ -1,4 +1,4 @@
-
+plugins { id "io.spring.dependency-management" version "1.0.4.RELEASE" }
 apply plugin: 'java'
 apply plugin: 'io.spring.dependency-management'
 

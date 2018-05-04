@@ -2,15 +2,16 @@ package controllers;
 
 
 import dao.ItemRepository;
-import model.Client;
 import model.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
@@ -49,7 +50,7 @@ public class StartController {
     @CrossOrigin
     public List<Item> getItemsByName(@RequestParam(name = "theme",defaultValue = "")String theme){
         Locale locale = LocaleContextHolder.getLocale();
-        return locale.equals(Locale.ENGLISH) ? itemrepository.getItemsByThemeEng(theme) : itemrepository.getItemsByTheme(theme);
+        return locale.getLanguage().equals(Locale.ENGLISH.getLanguage()) ? itemrepository.getItemsByThemeEng(theme) : itemrepository.getItemsByTheme(theme);
     }
 
     @RequestMapping(value = "/foto/{id}")
