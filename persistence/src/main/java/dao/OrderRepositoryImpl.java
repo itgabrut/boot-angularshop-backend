@@ -1,21 +1,31 @@
 package dao;
 
 
+import model.Bucket;
+import model.Client;
 import model.Item;
 import model.Order;
 import model.OrderForItem;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import javax.persistence.EntityManager;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ilya on 21.08.2016.
@@ -174,4 +184,21 @@ public class OrderRepositoryImpl implements OrderRepository {
     public long count() {
         return (long)entityManager.createQuery("select count(ord.id) from Order ord").getSingleResult();
     }
+
+//   public List<Bucket> test(){
+//        return entityManager.createQuery("select b from Bucket b").getResultList();
+//    }
+//
+//   public List<Bucket> test(Client client){
+//        return  entityManager.createQuery("select b from Bucket b where b.client.id = :cl_id ").setParameter("cl_id",client.getId()).getResultList();
+//    }
+
+    public List<Bucket> getBucketList(Client client){
+        return  entityManager.createNamedQuery("Bucket.getByClient").setParameter("cl_id",client.getId()).getResultList();
+    }
+
+//    @Transactional(propagation = Propagation.REQUIRED)
+//    public void saveB(Bucket b){
+//        entityManager.merge(b);
+//    }
 }

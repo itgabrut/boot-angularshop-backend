@@ -50,6 +50,7 @@ public class ClientRepositoryImpl implements ClientRepository {
      * @return client
      */
     @Override
+    @Transactional
     public Client getByEmail(String email) {
         try {
             return entityManager.createQuery("select u from Client u where u.email =:email", Client.class).setParameter("email", email).getSingleResult();

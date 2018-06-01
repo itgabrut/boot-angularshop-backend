@@ -155,4 +155,25 @@ public class Item {
     public void setFoto(byte[] foto) {
         this.foto = foto;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Item item = (Item) o;
+
+        if (id != item.id) return false;
+        if (active != item.active) return false;
+        return name.equals(item.name);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + name.hashCode();
+        result = 31 * result + (active ? 1 : 0);
+        return result;
+    }
 }

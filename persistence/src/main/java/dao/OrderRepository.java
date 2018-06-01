@@ -1,6 +1,8 @@
 package dao;
 
 
+import model.Bucket;
+import model.Client;
 import model.Item;
 import model.Order;
 
@@ -30,4 +32,6 @@ public interface OrderRepository {
     List<Order> getLazyList(int first, int pageSize, String sortField, String sortOrder, Map<String, String> filters);
 
     long count();
+
+    public List<Bucket> getBucketList(Client client);
 }

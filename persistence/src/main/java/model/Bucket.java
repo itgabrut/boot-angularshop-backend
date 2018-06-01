@@ -4,10 +4,13 @@ import model.PK.BucketPK;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -16,6 +19,9 @@ import javax.persistence.Table;
 @Entity
 @Table( name = "Bucket")
 @IdClass(BucketPK.class)
+@NamedQueries({
+        @NamedQuery(name = "Bucket.getByClient", query = "select b from Bucket b where b.client.id = :cl_id")
+})
 public class Bucket {
 
     @Id
@@ -24,7 +30,7 @@ public class Bucket {
     private Item item;
 
     @Id
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     private Client client;
 
