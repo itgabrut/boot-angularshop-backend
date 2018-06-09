@@ -34,4 +34,8 @@ public interface OrderRepository {
     long count();
 
     public List<Bucket> getBucketList(Client client);
+
+    public void saveBucketList(List<Bucket> buckets);
+
+    public void clearBucket(Client client);
 }

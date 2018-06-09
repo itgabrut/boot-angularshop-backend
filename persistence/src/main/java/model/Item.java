@@ -68,6 +68,17 @@ public class Item {
     @Column(name = "active",nullable = false)
     private boolean active;
 
+    @Transient
+    private int bucketQuant;
+
+    public int getBucketQuant() {
+        return bucketQuant;
+    }
+
+    public void setBucketQuant(int bucketQuant) {
+        this.bucketQuant = bucketQuant;
+    }
+
     public String getTheme2() {
         return theme2;
     }

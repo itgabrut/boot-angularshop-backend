@@ -11,8 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.LockModeType;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -83,8 +82,8 @@ public class OrderRepositoryImpl implements OrderRepository {
     public  boolean addOrder(Order order) {
         int a;
         for (OrderForItem orderForItem : order.getOrderForItems()) {
-//            entityManager.lock(i, LockModeType.OPTIMISTIC);
             Item i = orderForItem.getItem();
+            entityManager.lock(i, LockModeType.OPTIMISTIC);
             if ((a = (i.getQuantity() - orderForItem.getQuantity())) < 0) {
                 return false;
             }
@@ -197,8 +196,21 @@ public class OrderRepositoryImpl implements OrderRepository {
         return  entityManager.createNamedQuery("Bucket.getByClient").setParameter("cl_id",client.getId()).getResultList();
     }
 
-//    @Transactional(propagation = Propagation.REQUIRED)
-//    public void saveB(Bucket b){
-//        entityManager.merge(b);
-//    }
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void saveBucketList(List<Bucket> b){
+        b.forEach( bucket -> {
+            if(bucket.getItem().getBucketQuant()== 0 ){
+                entityManager.remove(entityManager.contains(bucket) ? bucket : entityManager.merge(bucket));
+            }
+            else entityManager.merge(bucket);
+        });
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void clearBucket(Client client) {
+        getBucketList(client).forEach(bucket -> {
+            entityManager.remove(bucket);
+        });
+    }
 }

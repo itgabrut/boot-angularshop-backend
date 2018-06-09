@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 
 /**
@@ -50,7 +51,11 @@ public class StartController {
     @CrossOrigin
     public List<Item> getItemsByName(@RequestParam(name = "theme",defaultValue = "")String theme){
         Locale locale = LocaleContextHolder.getLocale();
-        return locale.getLanguage().equals(Locale.ENGLISH.getLanguage()) ? itemrepository.getItemsByThemeEng(theme) : itemrepository.getItemsByTheme(theme);
+        List<Item> list  = locale.getLanguage().equals(Locale.ENGLISH.getLanguage()) ? itemrepository.getItemsByThemeEng(theme) : itemrepository.getItemsByTheme(theme);
+        return list.stream().map(item -> {
+            item.setBucketQuant(1);
+            return item;
+        }).collect(Collectors.toList());
     }
 
     @RequestMapping(value = "/foto/{id}")

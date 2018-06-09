@@ -37,6 +37,7 @@ public class Bucket {
     @Column(name = "quantity",nullable = false)
     private int quantity;
 
+
     public Item getItem() {
         return item;
     }
