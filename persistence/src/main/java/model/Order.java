@@ -38,7 +38,7 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnore
+//    @JsonIgnore
     private Client client;
 
     @Enumerated(EnumType.STRING)

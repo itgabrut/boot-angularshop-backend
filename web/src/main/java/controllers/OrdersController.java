@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import services.OrderService;
 
 import javax.persistence.OptimisticLockException;
@@ -92,6 +89,29 @@ public class OrdersController {
     @RequestMapping(value = "/secure/order",method = RequestMethod.GET)
     public List<Order> getOrders(){
         return orderService.getOrdersByClientId(getClient().getId());
+    }
+
+    @RequestMapping(value = "/secure/order/{id}")
+    public List<Item> getItemsByOrder(@PathVariable(value = "id") String orderId){
+        if(orderService.verifyOrderOnLoggedClient(orderId,getClient().getId())){
+            Map<Item, Integer> orders = orderRepository.getItemsOfOrder(Integer.parseInt(orderId));
+           List<Item> result =  orders.entrySet().stream().map(entry -> {
+                entry.getKey().setBucketQuant(entry.getValue());
+                return entry.getKey();
+            }).collect(Collectors.toList());
+           return result;
+        }
+        else return null;
+    }
+
+    @RequestMapping(value = "/secure/admin/order",method = RequestMethod.GET)
+    public List<Order> getAllOrders(){
+        return orderService.getAllSortedDate();
+    }
+
+    @RequestMapping(value = "/secure/admin/order",method = RequestMethod.PUT)
+    public ResponseEntity changeOrder(@RequestBody Map<String,Object> orderMap){
+        return orderService.updateOrder(orderMap) ? new ResponseEntity( HttpStatus.OK) : new ResponseEntity(HttpStatus.CONFLICT);
     }
 
     private  Client getClient(){

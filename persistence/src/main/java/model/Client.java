@@ -44,6 +44,7 @@ public class Client {
     private String email;
 
     @Column(name ="password")
+    @JsonIgnore
     private String password;
 
     @Transient
@@ -54,9 +55,6 @@ public class Client {
 //    @DateTimeFormat(pattern = "dd-MM-yyyy")
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd",timezone = "Europe/Moscow")
     private Date registered;
-
-    @Transient
-    private boolean isAdmin;
 
     public void setRegistered(Date registered) {
         this.registered = registered;
@@ -107,10 +105,6 @@ public class Client {
         return password;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -129,10 +123,6 @@ public class Client {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
     }
 
     public void setAddress(Address address) {
@@ -155,7 +145,6 @@ public class Client {
                 ", birth=" + birth +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", isAdmin=" + isAdmin +
                 '}';
     }
 

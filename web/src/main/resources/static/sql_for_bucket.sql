@@ -1,4 +1,4 @@
-create table shop.Bucket(
+create table shema1.Bucket(
 quantity int not null,
 client_id int(11) not null,
 item_id int(11) not null,

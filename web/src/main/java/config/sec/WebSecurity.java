@@ -38,6 +38,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http.csrf().disable().cors().and().authorizeRequests()
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
                 .antMatchers("secure/**").authenticated()
+                .antMatchers("secure/admin/**").hasRole("ADMIN")
                 .and()
                 .addFilter(new CustomAuthenticationFilter(authenticationManager()))
                 .addFilter(new CustomTokenCheckerFilter(authenticationManager()))
