@@ -5,7 +5,7 @@ package model.enums_utils;
  * del stat
  */
 public enum Delivery_status {
-    WAIT_FOR_PAYMENT,
+    WAITING_FOR_PAYMENT,
     PROCESSED,
     DELIVERED
 }

@@ -93,7 +93,7 @@ public class OrdersController {
 
     @RequestMapping(value = "/secure/order/{id}")
     public List<Item> getItemsByOrder(@PathVariable(value = "id") String orderId){
-        if(orderService.verifyOrderOnLoggedClient(orderId,getClient().getId())){
+        if(orderService.verifyOrderOnLoggedClient(orderId,getClient().getId()) || getClient().isAdmin()){
             Map<Item, Integer> orders = orderRepository.getItemsOfOrder(Integer.parseInt(orderId));
            List<Item> result =  orders.entrySet().stream().map(entry -> {
                 entry.getKey().setBucketQuant(entry.getValue());

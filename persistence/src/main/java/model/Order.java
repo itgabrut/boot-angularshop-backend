@@ -121,7 +121,7 @@ public class Order {
         order.setPayway("credit card");
         order.setPayStatus(Pay_status.WAITING);
         order.setDelivery("airmail");
-        order.setDeliveryStatus(Delivery_status.WAIT_FOR_PAYMENT);
+        order.setDeliveryStatus(Delivery_status.WAITING_FOR_PAYMENT);
         return order;
     }
 }

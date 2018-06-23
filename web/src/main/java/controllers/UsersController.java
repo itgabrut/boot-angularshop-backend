@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import services.ClientServiceImpl;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -53,5 +54,10 @@ public class UsersController {
             return new ResponseEntity<Boolean>(true, HttpStatus.OK);
         }
         else return new ResponseEntity<Boolean>(false , HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/secure/admin/users",method = RequestMethod.GET)
+    public List<Client> getAllClients(){
+       return clientService.getAll();
     }
 }

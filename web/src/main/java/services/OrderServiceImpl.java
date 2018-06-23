@@ -37,7 +37,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public boolean updateOrder(Map<String, Object> map) {
-        Order order = repository.getById(Integer.valueOf((String) map.get("orderId")));
+        Order order = repository.getById((Integer) map.get("orderId"));
         for(Map.Entry<String,Object> entr : map.entrySet()){
             switch (entr.getKey()){
                 case "payway" : order.setPayway((String)entr.getValue());

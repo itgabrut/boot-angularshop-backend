@@ -53,7 +53,7 @@ public class Client {
 
     @Column(name = "registered")
 //    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd",timezone = "Europe/Moscow")
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="dd-MM-yyyy",timezone = "Europe/Moscow")
     private Date registered;
 
     public void setRegistered(Date registered) {
@@ -68,6 +68,10 @@ public class Client {
 
     @Embedded
     private Address address = new Address();
+
+    public boolean isAdmin(){
+        return roles.contains(Role.ROLE_ADMIN);
+    }
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
