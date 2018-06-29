@@ -47,6 +47,10 @@ public class ItemServiceImpl {
         return itemRepository.getItem(id);
     }
 
+    public List<Item> getAll(){
+        return itemRepository.getAll();
+    }
+
     /**
      * Removes Item entity from db using it Id
      * @param id Id

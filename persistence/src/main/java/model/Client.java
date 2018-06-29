@@ -53,7 +53,7 @@ public class Client {
 
     @Column(name = "registered")
 //    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="dd-MM-yyyy",timezone = "Europe/Moscow")
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd",timezone = "Europe/Moscow")
     private Date registered;
 
     public void setRegistered(Date registered) {

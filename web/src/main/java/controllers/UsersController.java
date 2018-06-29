@@ -8,6 +8,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +28,11 @@ public class UsersController {
         if(client.getId() !=0)return new ResponseEntity(null, HttpStatus.UNAVAILABLE_FOR_LEGAL_REASONS);
         clientService.addClient(client);
         return new ResponseEntity<Client>(client, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/users/checkMail",method = RequestMethod.GET)
+    public ResponseEntity<Boolean> checkRegisterted(@RequestHeader( value = "email")String email){
+        return clientService.getByEmail(email) == null ? new ResponseEntity<Boolean>(false,HttpStatus.OK) : new ResponseEntity<Boolean>(true,HttpStatus.OK);
     }
 
     @RequestMapping(value = "secure/users/getClient")

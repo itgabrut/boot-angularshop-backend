@@ -87,8 +87,13 @@ public class OrdersController {
     }
 
     @RequestMapping(value = "/secure/order",method = RequestMethod.GET)
-    public List<Order> getOrders(){
+    public List<Order> getOrdersOfLoggedClient(){
         return orderService.getOrdersByClientId(getClient().getId());
+    }
+
+    @RequestMapping(value = "/secure/admin/order/{clientId}")
+    public List<Order> getOrdersByClientId(@PathVariable(value = "clientId") int id){
+        return orderService.getOrdersByClientId(id);
     }
 
     @RequestMapping(value = "/secure/order/{id}")
