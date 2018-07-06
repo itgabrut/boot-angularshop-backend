@@ -43,9 +43,10 @@ public class ItemRepositoryImpl implements ItemRepository {
     }
 
     @Transactional
-    public void deleteItem(int itemId) {
+    public Item deleteItem(int itemId) {
         Item item = entityManager.find(Item.class,itemId);
         entityManager.remove(item);
+        return item;
     }
 
     public List<Item> getAll() {

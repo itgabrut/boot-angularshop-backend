@@ -10,18 +10,10 @@ jar {
 
 
 dependencies {
-    // https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager
-//    compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.2.11.Final'
-    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
-    // https://mvnrepository.com/artifact/org.hibernate/hibernate-validator
-//    compile group: 'org.hibernate', name: 'hibernate-validator'
-// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
-//    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.0'
-    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
-//    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.8.0'
-    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core'
     compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.2'
     compile("org.hibernate.validator:hibernate-validator")
 //    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '1.5.9.RELEASE'

@@ -18,7 +18,7 @@ public interface ItemRepository {
 
     boolean isUniqueName(String name);
 
-    void deleteItem(int itemId);
+    Item deleteItem(int itemId);
 
     Item deleteSoft(int itemId);
 

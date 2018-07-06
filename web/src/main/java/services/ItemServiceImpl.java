@@ -57,7 +57,7 @@ public class ItemServiceImpl {
      * @return true on success
      */
     @Transactional
-    public boolean deleteItem(int id) {
+    public boolean deleteItemSoft(int id) {
         Item inactive = itemRepository.deleteSoft(id);
         LOG.info("Item {} delete Soft success",id);
         try {
@@ -68,6 +68,26 @@ public class ItemServiceImpl {
         }
         return true;
     }
+
+    @Transactional
+    public boolean activateItem(int id){
+        Item inactive = itemRepository.getItem(id);
+        if(inactive == null)return false;
+        inactive.setActive(true);
+        return true;
+    }
+
+    public void deleteItem(int id){
+       Item deleted =  itemRepository.deleteItem(id);
+        try {
+            FotoSaver.deleteByItem(deleted.getName(),deleted.getTheme());
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+
     /**
      * It provides information about ordering
      * @param orderId  Id of Order entity

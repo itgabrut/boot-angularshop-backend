@@ -2,8 +2,22 @@ package model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import utils.BytesDeserializer;
 
-import javax.persistence.*;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.persistence.Version;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -28,6 +42,7 @@ public class Item {
 
     @Version
     @Column(name = "version" , nullable = false, columnDefinition = "integer default 0")
+    @JsonIgnore
     private long version;
 
 //    @UniqueName
@@ -57,14 +72,14 @@ public class Item {
     @Column(name = "foto",columnDefinition = "org.hibernate.type.BinaryType")
 //    @Lob
 //    @Column(name = "foto")
-    @JsonIgnore
+    @JsonDeserialize(using = BytesDeserializer.class)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private byte[] foto;
 
     @JsonIgnore
     @Transient
     private int proxyId;
 
-    @JsonIgnore
     @Column(name = "active",nullable = false)
     private boolean active;
 
