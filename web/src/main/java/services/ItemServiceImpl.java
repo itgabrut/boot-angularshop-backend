@@ -60,12 +60,12 @@ public class ItemServiceImpl {
     public boolean deleteItemSoft(int id) {
         Item inactive = itemRepository.deleteSoft(id);
         LOG.info("Item {} delete Soft success",id);
-        try {
-            FotoSaver.deleteByItem(inactive.getName(),inactive.getTheme());
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
+//        try {
+//            FotoSaver.deleteByItem(inactive.getName(),inactive.getTheme());
+//        }
+//        catch (IOException e){
+//            e.printStackTrace();
+//        }
         return true;
     }
 
@@ -111,7 +111,7 @@ public class ItemServiceImpl {
         List<Item> list = new ArrayList<>();
         if(map!=null) {
             for (Map.Entry<String, Integer> entry : map.entrySet()) {
-                Item item = itemRepository.getItem(Integer.parseInt(entry.getKey()));
+                Item item = itemRepository.getActiveItem(Integer.parseInt(entry.getKey()));
                 list.add(item);
             }
             LOG.info("Items from Client card");
@@ -150,8 +150,19 @@ public class ItemServiceImpl {
      */
 
     @Transactional
-    public void addOrRedactItem(Item item) {
+    public void addOrRedactItem(Item item) throws IOException{
+        String oldName = null;
+        String oldTheme = null;
+        if(item.getProxyId() != 0){
+            Item previous = itemRepository.getItem(item.getProxyId());
+            oldName = previous.getName();
+            oldTheme = previous.getTheme();
+            itemRepository.detach(previous);
+        }
         itemRepository.save(item);
+        if(oldName != null && !item.getName().equals(oldName) || oldTheme != null && !item.getTheme().equals(oldTheme)){
+                FotoSaver.renameFotoDirectory(item.getName(),item.getTheme(), oldName, oldTheme);
+            }
         LOG.info("Item {} successfully saved",item.getId());
     }
 

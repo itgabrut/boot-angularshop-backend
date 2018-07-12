@@ -16,6 +16,8 @@ public interface ItemRepository {
 
     Item getItem(int itemId);
 
+    Item getActiveItem(int itemId);
+
     boolean isUniqueName(String name);
 
     Item deleteItem(int itemId);
@@ -24,7 +26,7 @@ public interface ItemRepository {
 
     List<Item> getAll();
 
-     void save(Item item);
+     Item save(Item item);
 
      List<String> getThemes(Locale locale);
 
@@ -33,4 +35,6 @@ public interface ItemRepository {
     List<Item> getItemsByThemeEng(String theme2);
 
     public byte[] getFoto(int id);
+
+    public void detach(Item item);
 }

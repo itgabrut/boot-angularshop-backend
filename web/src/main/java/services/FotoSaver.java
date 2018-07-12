@@ -5,7 +5,13 @@ import model.Item;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.*;
+import java.nio.file.DirectoryStream;
+import java.nio.file.FileVisitResult;
+import java.nio.file.FileVisitor;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +35,7 @@ public final class FotoSaver {
     public static void saveFotoToFileSystem(InputStream in, String category, String name, String num) throws IOException{
         Path p = Paths.get("/foto/"+category+"/"+name);
         Files.createDirectories(p);
-        Path res = p.resolve("file"+num+".jpg");
+        Path res = p.resolve("file"+num);
         if(in.available()>0)
         Files.copy(in,res, StandardCopyOption.REPLACE_EXISTING);
     }
@@ -74,6 +80,23 @@ public final class FotoSaver {
         }
         theme = theme.contains("/") ? theme.substring(0,theme.indexOf('/')) : theme;
         cleanDirectories(Paths.get("/foto/" + theme));
+    }
+
+    public static void deleteByPhotoName(String name, String theme, String... photoNames)throws IOException{
+        Path path = Paths.get("/foto/"+theme+"/"+name.trim());
+        try(DirectoryStream<Path> directoryStream = Files.newDirectoryStream(path)){
+            for (Path path1 : directoryStream){
+                if(Files.isRegularFile(path1)){
+                    for(String photoNAme : photoNames){
+                        if(photoNAme.contains(path1.getFileName().toString())){
+                            Files.deleteIfExists(path1);
+                            break;
+                        }
+                    }
+                }
+
+            }
+        }
     }
 
     /**

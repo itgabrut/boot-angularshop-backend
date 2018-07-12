@@ -96,7 +96,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = Order.getSimpleOrder();
         List<OrderForItem> list = new ArrayList<>();
         for(Map.Entry<Integer,Integer> entr : m.entrySet()){
-            Item item = itemRepository.getItem(entr.getKey());
+            Item item = itemRepository.getActiveItem(entr.getKey());
             OrderForItem orderForItem = new OrderForItem();
             orderForItem.setQuantity(entr.getValue());
             orderForItem.setItem(item);

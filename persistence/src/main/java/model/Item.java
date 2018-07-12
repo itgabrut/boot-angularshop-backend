@@ -86,6 +86,10 @@ public class Item {
     @Transient
     private int bucketQuant;
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getBucketQuant() {
         return bucketQuant;
     }

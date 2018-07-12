@@ -68,7 +68,7 @@ public class StartController {
     @ResponseBody
     @CrossOrigin
     public Item getSingle(@RequestParam( name = "id")Integer id){
-        return itemrepository.getItem(id);
+        return itemrepository.getActiveItem(id);
     }
 
 }

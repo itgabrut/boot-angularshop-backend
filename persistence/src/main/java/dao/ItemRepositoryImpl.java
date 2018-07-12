@@ -25,6 +25,11 @@ public class ItemRepositoryImpl implements ItemRepository {
    private EntityManager entityManager;
 
     public Item getItem(int itemId) {
+        return (Item) entityManager.createQuery("select i from Item i where i.id =:id").setParameter("id",itemId).getSingleResult();
+    }
+
+    @Override
+    public Item getActiveItem(int itemId) {
         return (Item) entityManager.createQuery("select i from Item i where i.active = true and i.id =:id").setParameter("id",itemId).getSingleResult();
     }
 
@@ -56,12 +61,14 @@ public class ItemRepositoryImpl implements ItemRepository {
     }
 
     @Transactional
-    public void save(Item item) {
+    public Item save(Item item) {
         if(item.getProxyId()==0) {
             long a = (long) entityManager.createQuery("select count(i.name) from Item i where i.name =:curr").setParameter("curr", item.getName()).getSingleResult();
             if (a < 1) {
                 entityManager.persist(item);
+                return item;
             }
+            return null;
         }
         else {
             entityManager.clear();
@@ -75,6 +82,7 @@ public class ItemRepositoryImpl implements ItemRepository {
             it.setTheme(item.getTheme());
             it.setTheme2(item.getTheme2());
             entityManager.flush();
+            return item;
         }
     }
 
@@ -97,5 +105,9 @@ public class ItemRepositoryImpl implements ItemRepository {
 
     public byte[] getFoto(int id){
       return  (byte[]) entityManager.createQuery("select i.foto from Item i where i.id =:id").setParameter("id",id).getSingleResult();
+    }
+
+    public void detach(Item item){
+        entityManager.detach(item);
     }
 }
